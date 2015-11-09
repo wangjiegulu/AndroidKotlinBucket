@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import com.wangjie.androidkotlinbucket.example.base.BaseActivity
-import com.wangjie.androidkotlinbucket.library._click
 import com.wangjie.androidkotlinbucket.library._pick
 import com.wangjie.androidkotlinbucket.library._presenter
 
@@ -22,13 +21,17 @@ class MainActivity : BaseActivity(), MainViewer {
 
         tv.text = "inject succeed"
 
-        _click(onClickListener, R.id.activity_main_test_a_btn)
+//        _click(onClickListener, R.id.activity_main_test_a_btn)
+        arrayOf(R.id.activity_main_test_a_btn)
+                .forEach { findViewById(it).setOnClickListener(onClickListener) }
+        arrayOf(tv)
+                .forEach { it.setOnClickListener(onClickListener) }
 
 
     }
 
-    val onClickListener: ((View) -> Unit)? = {
-        when(it.id){
+    val onClickListener: (View) -> Unit = {
+        when (it.id) {
             R.id.activity_main_tv,
             R.id.activity_main_test_a_btn -> presenter.test()
         }
