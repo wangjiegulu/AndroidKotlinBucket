@@ -1,11 +1,11 @@
 package com.wangjie.androidkotlinbucket.example
 
 import com.wangjie.androidkotlinbucket.example.base.BasePresenter
-import com.xingren.xrpatient.provider.kotlinext.bindPresenter
-import com.xingren.xrpatient.provider.kotlinext.doOnNextOrError
-import com.xingren.xrpatient.provider.kotlinext.subscribeSafeNext
+import com.wangjie.androidkotlinbucket.example.ext.bindPresenter
+import com.wangjie.androidkotlinbucket.example.ext.doOnNextOrError
+import com.wangjie.androidkotlinbucket.example.ext.observeOnMain
+import com.wangjie.androidkotlinbucket.example.ext.subscribeSafeNext
 import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 /**
@@ -28,7 +28,7 @@ public class MainPresenter(viewer: MainViewer) : BasePresenter<MainViewer>(viewe
                 it.onCompleted()
             }
                     .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOnMain()
                     .doOnNextOrError { viewer.cancelLoadingDialog() }
                     .subscribeSafeNext {
                         viewer.toast("succeed: $it")

@@ -1,4 +1,4 @@
-package com.xingren.xrpatient.provider.kotlinext
+package com.wangjie.androidkotlinbucket.example.ext
 
 import android.util.Log
 import com.wangjie.androidkotlinbucket.example.base.BasePresenter
@@ -15,8 +15,6 @@ import rx.android.schedulers.AndroidSchedulers
 
 // ---- RxJava ----
 
-//fun Request.Builder.rxExecute(): Observable<Response> = Observable.defer({ Observable.just(OkHttpClient().newCall(this.build()).execute()) }).subscribeOn(Schedulers.newThread());
-
 fun <T> Observable<T>.observeOnMain(): Observable<T> = this.observeOn(AndroidSchedulers.mainThread())
 
 //fun <T> Observable<T>.subscribeOnDb(): Observable<T> = this.subscribeOn(Schedulers.from(BasePresenter.THREAD_POOL_DB))
@@ -25,17 +23,17 @@ fun <T> Observable<T>.observeOnMain(): Observable<T> = this.observeOn(AndroidSch
 fun <T> Observable<T>.subscribeSafeNext(onNext: (T) -> Unit): Subscription = this.subscribe(onNext, { t -> Log.e("RxExt", "", t) }, {});
 fun <T> Observable<T>.subscribeSafeCompleted(onCompleted: () -> Unit): Subscription = this.subscribe({}, { t -> Log.e("RxExt", "", t) }, onCompleted);
 
-fun <T> Observable<T>.doOnNextOrError(donoe: () -> Unit): Observable<T> {
+fun <T> Observable<T>.doOnNextOrError(f: () -> Unit): Observable<T> {
     return this
-            .doOnNext { donoe.invoke() }
-            .doOnError { donoe.invoke() }
-};
+            .doOnNext { f() }
+            .doOnError { f() }
+}
 
-fun <T> Observable<T>.doOnCompletedOrError(donoe: () -> Unit): Observable<T> {
+fun <T> Observable<T>.doOnCompletedOrError(f: () -> Unit): Observable<T> {
     return this
-            .doOnCompleted { donoe.invoke() }
-            .doOnError { donoe.invoke() }
-};
+            .doOnCompleted { f() }
+            .doOnError { f() }
+}
 
 fun <V : KViewer> Subscription.bindPresenter(presenter: BasePresenter<V>): Subscription {
     presenter.goSubscription(this)
