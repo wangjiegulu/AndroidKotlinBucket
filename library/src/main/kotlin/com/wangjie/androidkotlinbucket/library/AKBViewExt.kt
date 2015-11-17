@@ -2,6 +2,7 @@ package com.wangjie.androidkotlinbucket.library
 
 import android.app.Activity
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.view.View
 
 /**
@@ -53,7 +54,6 @@ public fun <T : View> View._pick(resId: Int) = lazy(LazyThreadSafetyMode.NONE) {
 //        resId.forEach { findView(it).setOnClickListener(onClick) }
 //    }
 //}
-
 
 
 
