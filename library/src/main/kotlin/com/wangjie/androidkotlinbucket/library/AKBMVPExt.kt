@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.util.Log
+import android.util.SparseArray
+import android.view.View
 import android.widget.Toast
 
 /**
@@ -54,6 +56,8 @@ public interface KViewer {
         Log.w(KViewer::class.java.simpleName, "cancelLoadingDialog should impl by subclass")
     }
 
+    fun <T : View> findView(resId: Int): T;
+
 }
 
 /**
@@ -68,4 +72,27 @@ public open class KPresenter<V : KViewer>(var viewer: V) {
 
 }
 
+/**
+ * Controller，用于派发View中的事件，它在根据不同的事件调用Presenter
+ */
+public abstract class KController<KV : KViewer, KP : KPresenter<*>>(val viewer: KV, presenterCreate: () -> KP) {
+    protected val presenter: KP by lazy { presenterCreate() }
 
+    private val viewCache: SparseArray<View> = SparseArray();
+
+    /**
+     * 注册事件
+     */
+    abstract fun bindEvents()
+
+    public fun <T : View> getView(resId: Int): T {
+        val view: View? = viewCache.get(resId)
+        return view as T? ?: viewer.findView<T>(resId).apply {
+            viewCache.put(resId, this)
+        }
+    }
+
+    public fun closeAll() = presenter.closeAll()
+
+
+}
