@@ -48,11 +48,11 @@ public interface KViewer {
         }
     }
 
-    fun loadingDialog(message: String) {
+    fun showLoading(message: String) {
         Log.w(KViewer::class.java.simpleName, "loadingDialog should impl by subclass")
     }
 
-    fun cancelLoadingDialog() {
+    fun cancelLoading() {
         Log.w(KViewer::class.java.simpleName, "cancelLoadingDialog should impl by subclass")
     }
 
