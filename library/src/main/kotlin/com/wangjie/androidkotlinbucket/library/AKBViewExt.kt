@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.view.View
+import android.widget.Toast
 
 /**
  * Author: wangjie
@@ -62,6 +63,13 @@ inline fun <reified T : Activity> Context.toActivity(f: (Intent) -> Unit) {
         startActivity(this)
     }
 }
+
+// toast
+fun Activity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(this, message, duration).show()
+
+fun Fragment.toast(message: String, duration: Int = Toast.LENGTH_SHORT) = context?.lets { Toast.makeText(this, message, duration).show() }
+fun View.toast(message: String, duration: Int = Toast.LENGTH_SHORT) = context?.lets { Toast.makeText(this, message, duration).show() }
+
 
 
 

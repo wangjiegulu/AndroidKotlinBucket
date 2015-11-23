@@ -6,3 +6,5 @@ package com.wangjie.androidkotlinbucket.library
  * Date: 11/9/15.
  */
 public inline fun <T, R> T.lets(f: T.() -> R): R = f()
+
+
