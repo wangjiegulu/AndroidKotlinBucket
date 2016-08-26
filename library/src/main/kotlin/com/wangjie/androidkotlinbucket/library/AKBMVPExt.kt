@@ -20,10 +20,10 @@ import android.widget.Toast
  */
 public interface KIViewer {
     //    val onClickListener: ((view: View) -> Unit)?
-    val context: Context?;
+    val mContext: Context?;
 
     fun toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
-        context?.lets { Toast.makeText(this, message, duration).show() }
+        mContext?.lets { Toast.makeText(this, message, duration).show() }
     }
 
     fun dialog(title: String? = null,
@@ -33,7 +33,7 @@ public interface KIViewer {
                positiveClickListener: ((DialogInterface, Int) -> Unit)? = null,
                negativeClickListener: ((DialogInterface, Int) -> Unit)? = null
     ) {
-        context?.lets {
+        mContext?.lets {
             AlertDialog.Builder(this)
                     .setTitle(title)
                     .setMessage(message)
@@ -104,7 +104,7 @@ public interface KIController {
 }
 
 public abstract class KController<KV : KIViewer, KP : KPresenter<*>>(val viewer: KV, presenterCreate: () -> KP) : KIController {
-    protected val presenter: KP by lazy { presenterCreate() }
+    protected val presenter: KP by _lazy { presenterCreate() }
 
     private val viewCache: SparseArray<View> = SparseArray();
 

@@ -25,7 +25,7 @@ public fun <T : View> Activity._pick(resId: Int) = lazy(LazyThreadSafetyMode.NON
 
 /** Fragment **/
 // 从Fragment中注入View
-public fun <T : View> Fragment._pick(resId: Int) = lazy(LazyThreadSafetyMode.NONE) { view.findViewById(resId) as T }
+public fun <T : View> Fragment._pick(resId: Int) = lazy(LazyThreadSafetyMode.NONE) { view!!.findViewById(resId) as T }
 //// 绑定点击事件
 //public fun Fragment._click(onClick: ((View) -> Unit)?, vararg resId: Int): Fragment {
 //    __click({ view.findViewById(it) }, onClick, resId)

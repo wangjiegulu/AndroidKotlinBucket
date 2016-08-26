@@ -2,6 +2,7 @@ package com.wangjie.androidkotlinbucket.library
 
 import android.app.ActivityManager
 import android.content.Context
+import android.support.v4.content.ContextCompat
 
 /**
  * Created by wangjie on 11/17/15.
@@ -26,3 +27,5 @@ fun Context.isApplicationBackground(): Boolean {
     }
     return false
 }
+
+fun Context.color(res: Int): Int = ContextCompat.getColor(this, res)
